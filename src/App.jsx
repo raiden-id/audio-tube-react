@@ -1,14 +1,11 @@
 import "./style.css";
-import PlayorPause from "./elements/Button/PausePlay";
-const data = [
-  {
-    id: 1,
-    title: "Tutorial React JS Bahasa Indonesia : 18.Custom Hooks",
-    url: "https://youtu.be/ajNKk9sIVFY",
-  },
-];
+import { useEffect, useState } from "react";
+import PlaySong from "./components/Fragments/PlaySong";
+import {searchServices} from "./services/search.services";
 
 function App() {
+  const [results, setResults] = useState([]);
+
   return (
     <>
       <div className="flex justify-center text-xl font-semibold p-5">
@@ -19,7 +16,7 @@ function App() {
           <figure>
             <img
               src="https://i.ytimg.com/vi/ajNKk9sIVFY/maxresdefault.jpg"
-              alt="Shoes"
+              alt="img"
             />
           </figure>
           <div className="card-body">
@@ -36,6 +33,17 @@ function App() {
 }
 
 function BottomNavbar() {
+  const handelSearch = (e) => {
+    e.preventDefault();
+    const data = e.target.value;
+    console.log(data)
+    if (data.length > 3) {
+      searchServices(data, (res) => {
+        console.log(res);
+      });
+    }
+  };
+
   return (
     <div className="fixed bottom-0 w-full bg-gray-800 text-white p-4 flex items-center justify-between">
       <div className="flex items-center">
@@ -48,11 +56,15 @@ function BottomNavbar() {
         </div>
         <input
           type="text"
-          placeholder="Song name"
+          placeholder="Song name / url video"
+          onChange={handelSearch}
           className="bg-transparent border-b border-white ml-4 focus:outline-none text-white"
         />
       </div>
-      <PlayorPause play={true} />
+      <PlaySong
+        url="https://dl154.dlmate18.online/?file=M3R4SUNiN3JsOHJ6WWQ2a3NQS1Y5ZGlxVlZIOCtyZ1VsTlFqeXhrd0ZlQnJwNEV1d3ErVE04eEtLdXc2M2NIcEk5dEM4Q3phUDkyYlkwbVB2NVFqZldPQTQ5NWcvRzNwNm9FMVRkeHpVMU9xdmV1enhYUWtyd093TFA3a0RaNWlUSEUydFdkQittaWUzS0tTdmhEMzdsU0o0VWliZkMwWXR5OENNUENOb01rUmd6bVROcWUxaHRZV3BEeWF2ODhiamFURTRGbWpoYUVvNWRoM0NBPT0%3D"
+        play={true}
+      />
     </div>
   );
 }
