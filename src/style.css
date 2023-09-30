@@ -1,0 +1,13 @@
+/* styles.css */
+.rotate-spin {
+  animation: rotate 2s linear infinite; /* Menerapkan animasi putaran */
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg); /* Rotasi mulai dari 0 derajat */
+  }
+  100% {
+    transform: rotate(360deg); /* Rotasi hingga 360 derajat */
+  }
+}
