@@ -1,6 +1,5 @@
 import "./style.css";
 import { useEffect, useState, useRef } from "react";
-//import PlaySong from "./components/Fragments/PlaySong";
 import { searchServices } from "./services/search.services";
 import { getRawAudio } from "./services/getrawaudio.services";
 
@@ -8,6 +7,8 @@ function App() {
   const [results, setResults] = useState([]);
   const [contentaudio, setContentAudio] = useState();
   const [isPlaying, setIsPlaying] = useState(true);
+  const [beforeaudio, setBeforeAudio] = useState();
+  const [imageanimated, setImageAnimated] = useState();
   const audioRef = useRef(null);
 
   const handelSearch = (e) => {
@@ -25,18 +26,28 @@ function App() {
   };
 
   const handelPlay = (v) => {
+    setImageAnimated(`https://i.ytimg.com/vi/${v}/maxresdefault.jpg`);
     getRawAudio(v, (res) => {
       setContentAudio(res);
-      setIsPlaying(true);
       initAudio();
     });
   };
 
   let initAudio = () => {
+    const audio = audioRef.current;
+    const currentTime = audio.currentTime;
+    setBeforeAudio(contentaudio);
     if (isPlaying) {
-      audioRef.current.play();
+      audio.src = contentaudio;
+      if (audio.src != beforeaudio) {
+        audio.currentTime = 0;
+      } else {
+        audio.currentTime = currentTime;
+      }
+
+      audio.play();
     } else {
-      audioRef.current.pause();
+      audio.pause();
     }
     setIsPlaying(!isPlaying);
   };
@@ -77,15 +88,23 @@ function App() {
       <div className="fixed  bottom-0 w-full bg-gray-800 text-white p-4 flex items-center justify-between">
         <div className="flex items-center">
           <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-            <img
-              src="https://i.ytimg.com/vi/_UX8tiVccQQ/hqdefault.jpg?sqp=-oaymwEmCOADEOgC8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGMgYyhjMA8=&rs=AOn4CLDL4zo4wPsFTHAgWPUqCE_l4ayIvg" // Ganti dengan path gambar Anda
-              alt="Music Icon"
-              className="rounded-full w-12 h-12 rotate-spin" // Tambahkan animasi putar di sini
-            />
+            {imageanimated && imageanimated ? (
+              <img
+                src={imageanimated} // Ganti dengan path gambar Anda
+                alt="Music Icon"
+                className="rounded-full w-12 h-12 rotate-spin" // Tambahkan animasi putar di sini
+              />
+            ) : (
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcNQjF89FAyxtshS6M7n6QCS9ftERzkLdWkg&usqp=CAU" // Ganti dengan path gambar Anda
+                alt="Music Icon"
+                className="rounded-full w-12 h-12 rotate-spin" // Tambahkan animasi putar di sini
+              />
+            )}
           </div>
           <input
             type="text"
-            placeholder="Song name / url video"
+            placeholder="Song name / id video"
             onChange={handelSearch}
             className="bg-transparent border-b border-white ml-4 focus:outline-none text-white"
           />
