@@ -4,8 +4,7 @@ function PlaySong(props) {
   const { play, url } = props;
   const [isPlaying, setIsPlaying] = useState(play);
   const audioRef = useRef(null);
-  
-  
+
   // play audio
   let initAudio = () => {
     if (isPlaying) {
@@ -40,7 +39,7 @@ function PlaySong(props) {
         )}
       </button>
       <audio ref={audioRef}>
-        <source src="https://dl183.dlmate14.online/?file=M3R4SUNiN3JsOHJ6WWQ2a3NQS1Y5ZGlxVlZIOCtyaDF3WTFxMUZzUERxMUY3YTRtdy8zcmFNVkFLSzVFeFlPeVd0WmI1WFhLY05TQ1AwVEN0WkF2VG4vSzlkTThyU3lFNTRGclM4eDlWdzdyai9PbmozcGloa240Ym91TEU3RmFhRWhyb2xScmptUEI2dWpickFIdHNYam85V3VPZkhkUDRCMFBlS2YydzhsT2pFWE5aZkxlK29OTG9EYk1wSjFNMWEyMGtFZnoyNkkzcXRsaFYwbHhMc0VMZ015bGhxT1o4aEZmazVBRzN4RHorYkR5VnM5dFR1T05iMnAwUEhzPQ%3D%3D"></source>
+        <source src={url}></source>
       </audio>
     </>
   );

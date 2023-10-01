@@ -2,19 +2,10 @@ import axios from "axios";
 
 export const searchServices = async (data, callback) => {
   try {
-    const datax = {
-      k_query: data,
-      k_page: "home",
-      hl: "en",
-      q_auto: 0,
-    };
-
-    const res = await axios.post(
-      "https://www.y2mate.com/mates/en853/analyzeV2/ajax",
-      datax
+    const response = await axios.get(
+      "http://localhost:8000/api/v1/search/" + data
     );
-    //console.log(response);
-    callback(res);
+    callback(response.data.response.vitems);
   } catch (err) {
     console.error(err);
   }
