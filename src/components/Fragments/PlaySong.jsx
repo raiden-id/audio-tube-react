@@ -5,7 +5,7 @@ function PlaySong(props) {
   const [isPlaying, setIsPlaying] = useState(play);
   const audioRef = useRef(null);
 
-  // play audio
+  // play audio -
   let initAudio = () => {
     if (isPlaying) {
       audioRef.current.play();
